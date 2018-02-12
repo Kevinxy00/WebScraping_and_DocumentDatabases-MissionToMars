@@ -1,0 +1,21 @@
+/* banner at the top of the page */ 
+.banner{
+    background-color: rgb(112, 14, 14);
+
+}
+
+h1.banner_txt {
+    text-align: center;
+    color: rgb(255,255,255);
+}
+/* button under banner heading text which links to scrape() */
+#scrape_btn {
+    text-align: center;
+}
+
+/* first text after banner with the latest news from NASA*/
+/* doesn't seem to be working at all */
+#first_text {
+  background-color: rgb(253, 255, 139);
+}
+

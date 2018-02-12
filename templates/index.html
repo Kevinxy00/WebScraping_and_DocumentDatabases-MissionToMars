@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Mission to Mars</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/styles.css') }}">
 </head>
 
 <body>
@@ -17,30 +17,59 @@
         <div class="col-md-3">
         </div>
         <div class='col-md-6 text-center'>
+            </br> </br>
             <h1 class="banner_txt"> Mission to Mars </h1>
             <!-- button that calls the /scrape path to web scrape -->
-            <a href="/scrape" id="scrape_btn" class="btn btn-dark" role="button">Web Scrape the Latest on Mars</a>
+            <a href="/scrape" id="scrape_btn" class="btn btn-dark" role="button">Click to Web Scrape the Latest on Mars</a>
+            </br> </br>
         </div>
         <div class="col-md-3">
         </div>
     </div>
 
     <!-- latest mars news: title and first two paragraphs-->
-    <div class="row">
-        <div class="col-md-12">
+    <div id="first_text" class="row">
+        <div class='col-md-1'>
+        </div>
+        <div class="col-md-10">
+        </br> </br>
             {% if Nasa_latest_title %}
+                <h2>The Latest News From NASA:</h2>
+                <hr>
                 <h3>{{Nasa_latest_title}}</h3>
-                <p>{{Nasa_latest_paragraph1}}</p>
-                <p>{{Nasa_latest_paragraph2}}</p>
+                <p> &emsp; {{Nasa_latest_paragraph1}}</p>
+                <p> &emsp; {{Nasa_latest_paragraph2}}</p>
+                <hr>
             {% else %}
-                <h3>Click the Web Scrape button above to get the latest in mars news and facts</h3>
+                <h2>Click the Web Scrape button above to get the latest in mars news and facts</h2>
+                <hr>
             {% endif %}
         </div>
-
-
+        <div class='col-md-1'>
+        </div>
     </div>
 
+    <!-- featured_image on the left, latest mars weather tweet on top left, mars facts table under it -->
+    <div class='row'>
+        <div class='col-md-8'>
+            <figure>
+                <img src={{featured_image_url}} alt="Featured image for NASA mars page">
+            </figure>
+        </div>
+        <div class='col-md-4'>
+            <div>
+                <!-- latest weather tweet -->
+                <h3> Current Weather on Mars <hr> </h3>
+                <p> {{mars_weather_tweet}}</p>
+                <p> source: Mars Weather Twitter Handle </br>
+                    <a href="https://twitter.com/marswxreport?lang=en"> https://twitter.com/marswxreport?lang=en </a>
+                </p>
 
+                <!-- facts table -->
+                {{mars_facts_table}}
+            </div>
+        </div>
+    </div>
   </div>
 </body>
 </html>

@@ -68,7 +68,7 @@ def scrape_mars():
         scrape_rslts, # Replacement
         upsert=True # creates a new document when no document matches the query criteria.
     )
-    return redirect('http://localhost:5000/', code=302)
+    return redirect('http://localhost:5000/', code=302) # redirects route back to index ('/')
 
 if __name__ == '__main__':
     app.run()
