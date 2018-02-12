@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Mission to Mars</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+  <div class = "container-fluid">
+    <!-- Top banner -->
+    <div class = 'row banner'>
+        <div class="col-md-3">
+        </div>
+        <div class='col-md-6 text-center'>
+            <h1 class="banner_txt"> Mission to Mars </h1>
+            <!-- button that calls the /scrape path to web scrape -->
+            <a href="/scrape" id="scrape_btn" class="btn btn-dark" role="button">Web Scrape the Latest on Mars</a>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+
+    <!-- latest mars news: title and first two paragraphs-->
+    <div class="row">
+        <div class="col-md-12">
+            {% if Nasa_latest_title %}
+                <h3>{{Nasa_latest_title}}</h3>
+                <p>{{Nasa_latest_paragraph1}}</p>
+                <p>{{Nasa_latest_paragraph2}}</p>
+            {% else %}
+                <h3>Click the Web Scrape button above to get the latest in mars news and facts</h3>
+            {% endif %}
+        </div>
+
+
+    </div>
+
+
+  </div>
+</body>
+</html>

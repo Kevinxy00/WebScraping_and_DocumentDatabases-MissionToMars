@@ -11,7 +11,7 @@ import requests
 from splinter import Browser
 import time
 
-def scrape ():
+def scrape():
 # A webscraping function for the latest news on mars
     # Python dictionary of the results
     scrape_rsult = {}
@@ -23,7 +23,7 @@ def scrape ():
     # *** Scrape the [NASA Mars News Site] ***
     url_NASA = "https://mars.nasa.gov/news"
     r = requests.get(url_NASA) # sends a request to the url
-    time.sleep(5)
+    time.sleep(1)
     data = r.text # turns response into texts
     soup = BeautifulSoup(data, "html.parser") # changes the response from text to html
 
@@ -59,7 +59,7 @@ def scrape ():
     news_url = url + soup_p_url
     # request url
     r = requests.get(news_url)
-    time.sleep(5)
+    time.sleep(1)
     data = r.text
     soup = BeautifulSoup(data, "html.parser")
 
@@ -89,7 +89,7 @@ def scrape ():
     browser = Browser('chrome', **executable_path, headless=False)
     url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
     browser.visit(url)
-    time.sleep(10)
+    time.sleep(3)
 
     # In[9]:
 
@@ -97,7 +97,7 @@ def scrape ():
     # Use splinter to navigate the site and find the image url for the current Featured Mars Image and 
 
     browser.click_link_by_partial_text('FULL IMAGE')
-    time.sleep(10)
+    time.sleep(3)
 
     # In[10]:
 
@@ -127,7 +127,7 @@ def scrape ():
     '''
     url = 'https://twitter.com/marswxreport?lang=en'
     r = requests.get(url)
-    time.sleep(5)
+    time.sleep(1)
     data = r.text
     soup = BeautifulSoup(data, 'html.parser')
 
@@ -173,7 +173,7 @@ def scrape ():
     '''
     url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
     browser.visit(url)
-    time.sleep(10)
+    time.sleep(3)
 
     # In[115]:
 
@@ -252,4 +252,7 @@ def scrape ():
     return scrape_rsult
 
 # Testing: printed to verify all variables stored in dict
-# print(str(scrape()))
+'''results = scrape()
+if type(results) is dict:
+    print(results)
+'''
