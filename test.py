@@ -3,7 +3,7 @@ from flask import Flask, jsonify, redirect, render_template
 import pymongo
 from pymongo import MongoClient
 from scrape_mars import scrape
-
+import pprint
 # remember to run mongodb in gitbash or cmd line
 client = MongoClient('mongodb://localhost:27017/')
 
@@ -14,4 +14,5 @@ app = Flask(__name__)
 db = client.mars_info_DB
 mars_collec = db.mars_collection
 
-scrape_rslts = scrape()
+test = mars_collec.find_one()
+print(test['Nasa_latest_title'])

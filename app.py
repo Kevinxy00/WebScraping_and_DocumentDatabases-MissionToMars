@@ -21,24 +21,26 @@ mars_collec = db.mars_collection
 def render_index():
     # If scrape_mars() has yet to be run, will get an index error
     try:
-        mars_ls = list(mars_collec.find({}))[0]
+        # find the first entry, which is where I inserted the entire python dict
+        mars_find =  mars_collec.find_one() 
         # get the scrape results from mongodb collection mars_info
         # Since dot notation doesn't work with lists and calling by integers, I have to do this
-        Nasa_latest_title = mars_ls['Nasa_latest_title']
-        Nasa_latest_paragraph1 = mars_ls['Nasa_latest_paragraph'][0]
-        Nasa_latest_paragraph2 = mars_ls['Nasa_latest_paragraph'][1]
-        featured_image_url = mars_ls['featured_image_url']
-        mars_weather_tweet = mars_ls['mars_weather_tweet']
-        mars_facts_table = mars_ls['mars_facts_table']
-        hemis_1_title = mars_ls['hemispheres'][0]['title']
-        hemis_1_img = mars_ls['hemispheres'][0]['img_url']
-        hemis_2_title = mars_ls['hemispheres'][1]['title']
-        hemis_2_img = mars_ls['hemispheres'][1]['img_url']
-        hemis_3_title = mars_ls['hemispheres'][2]['title']
-        hemis_3_img = mars_ls['hemispheres'][2]['img_url']
-        hemis_4_title = mars_ls['hemispheres'][3]['title']
-        hemis_4_img = mars_ls['hemispheres'][3]['img_url']
-    except IndexError:
+        Nasa_latest_title = mars_find['Nasa_latest_title']
+        Nasa_latest_paragraph1 = mars_find['Nasa_latest_paragraph'][0]
+        Nasa_latest_paragraph2 = mars_find['Nasa_latest_paragraph'][1]
+        featured_image_url = mars_find['featured_image_url']
+        mars_weather_tweet = mars_find['mars_weather_tweet']
+        mars_facts_table = mars_find['mars_facts_table']
+        hemis_1_title = mars_find['hemispheres'][0]['title']
+        hemis_1_img = mars_find['hemispheres'][0]['img_url']
+        hemis_2_title = mars_find['hemispheres'][1]['title']
+        hemis_2_img = mars_find['hemispheres'][1]['img_url']
+        hemis_3_title = mars_find['hemispheres'][2]['title']
+        hemis_3_img = mars_find['hemispheres'][2]['img_url']
+        hemis_4_title = mars_find['hemispheres'][3]['title']
+        hemis_4_img = mars_find['hemispheres'][3]['img_url']
+    except (IndexError, TypeError) as e:
+        # note: either error only occurs if there's nothing in the mars_info_DB. Either there's no index or NoneType object returns. 
         Nasa_latest_title = ""
         Nasa_latest_paragraph1 = ""
         Nasa_latest_paragraph2 = ""
