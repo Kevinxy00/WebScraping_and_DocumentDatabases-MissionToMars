@@ -55,9 +55,12 @@ def render_index():
         hemis_3_img = ""
         hemis_4_title = ""
         hemis_4_img = ""
+    # rendering template to index.html. Throughout this func, I kept all the var names the same as they were in scrape_mars.py
     return render_template("index.html", Nasa_latest_title=Nasa_latest_title, Nasa_latest_paragraph1=Nasa_latest_paragraph1,\
                             Nasa_latest_paragraph2=Nasa_latest_paragraph2, featured_image_url=featured_image_url,\
-                            mars_weather_tweet=mars_weather_tweet, mars_facts_table=mars_facts_table)
+                            mars_weather_tweet=mars_weather_tweet, mars_facts_table=mars_facts_table, hemis_1_title=hemis_1_title,\
+                            hemis_1_img=hemis_1_img, hemis_2_title=hemis_2_title, hemis_2_img=hemis_2_img, \
+                            hemis_3_title=hemis_3_title, hemis_3_img=hemis_3_img, hemis_4_title=hemis_4_title, hemis_4_img=hemis_4_img)
 
 # using scrape() from scrape_mars.py, inserts results into a mars_info in MongoDB
 @app.route('/scrape')

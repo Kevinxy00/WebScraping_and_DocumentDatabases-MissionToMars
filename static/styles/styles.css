@@ -19,3 +19,24 @@ h1.banner_txt {
   background-color: rgb(253, 255, 139);
 }
 
+/* nor this. Does bootstrap override normal css? */
+#tweet_box {
+    background-color:rgb(216, 216, 216);
+    padding:5%;
+}
+
+/* this positions facts table to bottom of current container
+also doesn't seem to be working at all */
+div.facts_table {
+    position:relative;
+    bottom:-50px;
+}
+
+figcaption.hemis_caption{
+    text-align: center;
+}
+
+img {
+    width: 50%;
+    height: auto;
+}

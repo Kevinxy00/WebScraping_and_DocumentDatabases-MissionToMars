@@ -15,4 +15,6 @@ db = client.mars_info_DB
 mars_collec = db.mars_collection
 
 test = mars_collec.find_one()
-print(test['Nasa_latest_title'])
+table = test['mars_facts_table']
+
+print(table.html)
