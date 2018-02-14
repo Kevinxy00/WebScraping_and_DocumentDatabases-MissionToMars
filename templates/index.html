@@ -80,7 +80,7 @@
                 {% else %}
                 {% endif %}
             </div>
-            </br> </br> 
+            </br>  
             <!-- facts table -->
             <div class="info_box">
                 {% if mars_facts_table %}
@@ -90,6 +90,8 @@
                     {{mars_facts_table|safe}}
                         <!-- note: the "|safe" means that this variable is a well-formed and trusted HTML. This excludes it from jinja2's
                         HTML auto-escaping. http://jinja.pocoo.org/docs/dev/templates/#html-escaping  -->
+                    <hr>
+                    <p> (source: http://space-facts.com/mars) </p>
                 {% else %}
                 </br>
                 {% endif %}
@@ -160,6 +162,8 @@
 
   </div> <!-- ends container -->
   <hr>
-  </br>
+  <p> &emsp; Created by Kevin Yao. Github repo 
+      <a href=https://github.com/Kevinxy00/WebScraping_and_DocumentDatabases-MissionToMars>here</a>.
+  </p>
 </body>
 </html>
