@@ -94,27 +94,43 @@ def scrape():
     # In[9]:
 
 
-    # Use splinter to navigate the site and find the image url for the current Featured Mars Image and 
+    # Use splinter to navigate the site and find the image url for the current Featured Mars Image
+    #     the mars featured images are under a list element of the slide class. '>' signifies a child element.  
+    browser.find_by_css('li.slide>a.fancybox').first.click()
+    time.sleep(1)
 
-    browser.click_link_by_partial_text('FULL IMAGE')
-    time.sleep(3)
-
+    # clicks the 'more info' button (caution!: the 'share' button is under a similar but different class)
+    browser.find_by_css('div.buttons>a.button').first.click()
+    time.sleep(1)
     # In[10]:
 
 
     # assign the url string to a variable called `featured_image_url`.
+    #     Here, I decide to get both the full-size .jpg and an 800x600 size image for the webpage
     html = browser.html
     soup = BeautifulSoup(html, "html.parser")
-    
-    feat_img_soup = soup.find_all(class_="button fancybox")
 
-    feat_img = feat_img_soup[0].get('data-fancybox-href')
+    # full-size jpg (to be linked if image is clicked)
+    feat_full_img_soup = soup.find(class_="main_image")
+    feat_full_img = feat_full_img_soup.get('src')
 
+    # smaller size jpg (to be displayed on the webpage)
+    #     uses splinter instead of beautiful soup
+    browser.click_link_by_partial_href('800x600.jpg')
+    #     switch over to the next browser (window no. 2)
+    #     save it's url, then close 2nd window
+    browser.windows.current = browser.windows[1]  
+    featured_image_url = browser.url
+    browser.windows[1].close()
+
+    # save the two urls 
     ori_url = 'https://www.jpl.nasa.gov'
-    featured_image_url = ori_url + feat_img
-    # ^^^ featured_image_url is https://www.jpl.nasa.gov + url of the featured image
+    feat_full_img = ori_url + feat_full_img
+    # ^^^ feat_full_img is https://www.jpl.nasa.gov + url of the full-sized featured image
+    #     featured_image_url is the smaller 800x600 image that will be featured on the webpage
 
     scrape_rsult["featured_image_url"] = featured_image_url
+    scrape_rsult['feat_full_img'] = feat_full_img
 
     # ### Mars Weather
 
@@ -205,7 +221,7 @@ def scrape():
     # In[116]:
 
 
-    ''' It seems splinter can only click link based on the exact wording of the text
+    ''' Caution!: It seems splinter can only click link based on the exact wording of the text
     browser.click_link_by_partial_text('Cerberus Hemisphere')    #e.g. function will fail to find lower case 'cerberus'
     '''
 

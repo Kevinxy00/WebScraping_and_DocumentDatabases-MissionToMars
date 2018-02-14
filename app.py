@@ -29,6 +29,7 @@ def render_index():
         Nasa_latest_paragraph1 = mars_find['Nasa_latest_paragraph'][0]
         Nasa_latest_paragraph2 = mars_find['Nasa_latest_paragraph'][1]
         featured_image_url = mars_find['featured_image_url']
+        feat_full_img = mars_find['feat_full_img']
         mars_weather_tweet = mars_find['mars_weather_tweet']
         mars_facts_table = mars_find['mars_facts_table']
         hemis_1_title = mars_find['hemispheres'][0]['title']
@@ -39,12 +40,14 @@ def render_index():
         hemis_3_img = mars_find['hemispheres'][2]['img_url']
         hemis_4_title = mars_find['hemispheres'][3]['title']
         hemis_4_img = mars_find['hemispheres'][3]['img_url']
-    except (IndexError, TypeError) as e:
+    except (IndexError, TypeError, NameError, KeyError) as e:
         # note: either error only occurs if there's nothing in the mars_info_DB. Either there's no index or NoneType object returns. 
+        #       NameError and KeyError occured when I added a variable to be rendered that wasn't in the db collection before. 
         Nasa_latest_title = ""
         Nasa_latest_paragraph1 = ""
         Nasa_latest_paragraph2 = ""
         featured_image_url = ""
+        feat_full_img = ""
         mars_weather_tweet = ""
         mars_facts_table = ""
         hemis_1_title = ""
@@ -56,11 +59,14 @@ def render_index():
         hemis_4_title = ""
         hemis_4_img = ""
     # rendering template to index.html. Throughout this func, I kept all the var names the same as they were in scrape_mars.py
-    return render_template("index.html", Nasa_latest_title=Nasa_latest_title, Nasa_latest_paragraph1=Nasa_latest_paragraph1,\
-                            Nasa_latest_paragraph2=Nasa_latest_paragraph2, featured_image_url=featured_image_url,\
-                            mars_weather_tweet=mars_weather_tweet, mars_facts_table=mars_facts_table, hemis_1_title=hemis_1_title,\
-                            hemis_1_img=hemis_1_img, hemis_2_title=hemis_2_title, hemis_2_img=hemis_2_img, \
-                            hemis_3_title=hemis_3_title, hemis_3_img=hemis_3_img, hemis_4_title=hemis_4_title, hemis_4_img=hemis_4_img)
+    return render_template("index.html", Nasa_latest_title=Nasa_latest_title,\
+                            Nasa_latest_paragraph1=Nasa_latest_paragraph1, Nasa_latest_paragraph2=Nasa_latest_paragraph2,\
+                            featured_image_url=featured_image_url, feat_full_img=feat_full_img,\
+                            mars_weather_tweet=mars_weather_tweet, mars_facts_table=mars_facts_table,\
+                            hemis_1_title=hemis_1_title, hemis_1_img=hemis_1_img,\
+                            hemis_2_title=hemis_2_title, hemis_2_img=hemis_2_img,\
+                            hemis_3_title=hemis_3_title, hemis_3_img=hemis_3_img,\
+                            hemis_4_title=hemis_4_title, hemis_4_img=hemis_4_img)
 
 # using scrape() from scrape_mars.py, inserts results into a mars_info in MongoDB
 @app.route('/scrape')

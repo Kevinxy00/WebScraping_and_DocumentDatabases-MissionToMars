@@ -7,9 +7,10 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Mission to Mars</title>
   <!-- reset css -->
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/reset.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='reset.css')}}">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/styles.css') }}">
+  <!-- css style sheet has to be in /static folder because of flask/jinja2 -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles.css')}}">
 </head>
 
 <body>
@@ -35,7 +36,8 @@
         </div>
         <div class="col-md-10">
         </br> </br>
-            {% if Nasa_latest_title %}
+            <!-- Rendering HTML from app.py -->
+            {% if Nasa_latest_title %} <!-- checking if this is empty as a test to see if mars_collection is empty. -->
                 <h2>The Latest News From NASA:</h2>
                 <hr>
                 <h3>{{Nasa_latest_title}}</h3>
@@ -43,7 +45,7 @@
                 <p> &emsp; {{Nasa_latest_paragraph2}}</p>
                 </br>
             {% else %}
-                <h2>Click the Web Scrape button above to get the latest in mars news and facts</h2>
+                <h2>Click the Web Scrape button above to get the latest in Mars news and facts</h2>
                 </br>
             {% endif %}
         </div>
@@ -54,68 +56,110 @@
     <!-- featured_image on the left, latest mars weather tweet on top left, mars facts table under it -->
     <div class='row'>
         <div class='col-md-8'>
-            <figure>
-                <img src={{featured_image_url}} alt="Featured image for NASA mars page">
-            </figure>
+            {% if (featured_image_url) and (feat_full_img) %}
+                <figure class="main">
+                    <figcaption class="main_caption">
+                        <h2> The Latest Featured Image of Mars </h2>
+                    <a target="_blank" href={{feat_full_img}}>
+                        <img class="image" src={{featured_image_url}} alt="Featured image for NASA mars page">
+                    </a>
+                </figure>
+            {% else %}
+                </br>
+            {% endif %}
         </div>
         <div class='col-md-4'>
-            <div style="background:rgb(216, 216, 216); outline:.01px double black; padding:5%;">
-                <!-- latest weather tweet -->
-                <h3> Current Weather on Mars <hr> </h3>
-                <p> {{mars_weather_tweet}}</p>
-                <p> (source: Mars Weather Twitter Handle </br>
-                    <a href="https://twitter.com/marswxreport?lang=en"> https://twitter.com/marswxreport?lang=en </a>)
-                </p>
+            <div class="info_box">
+                {% if mars_weather_tweet %}
+                    <!-- latest weather tweet -->
+                    <h3> Current Weather on Mars <hr> </h3>
+                    <p> {{mars_weather_tweet}}</p>
+                    <p> (source: Mars Weather Twitter Handle </br>
+                        <a href="https://twitter.com/marswxreport?lang=en"> https://twitter.com/marswxreport?lang=en </a>)
+                    </p>
+                {% else %}
+                {% endif %}
             </div>
-            </br>
+            </br> </br> 
             <!-- facts table -->
-            <div style="background:rgb(216, 216, 216); outline:.01px double black; padding:5%;">
-                <h3>Fun facts about Mars!</h3>
-                <hr>
-                <!-- table rendered with flask, which uses jinja2. Already includes <table></table> -->
-                {{mars_facts_table|safe}}
-                    <!-- note: the "|safe" means that this variable is a well-formed and trusted HTML. This excludes it from jinja2's
-                    HTML auto-escaping. http://jinja.pocoo.org/docs/dev/templates/#html-escaping  -->
+            <div class="info_box">
+                {% if mars_facts_table %}
+                    <h3>Fun facts about Mars!</h3>
+                    <hr>
+                    <!-- table rendered with flask, which uses jinja2. Already includes <table></table> -->
+                    {{mars_facts_table|safe}}
+                        <!-- note: the "|safe" means that this variable is a well-formed and trusted HTML. This excludes it from jinja2's
+                        HTML auto-escaping. http://jinja.pocoo.org/docs/dev/templates/#html-escaping  -->
+                {% else %}
+                </br>
+                {% endif %}
             </div>
             
         </div>
     </div>
+    </br> </br> 
 
     <!-- Mars hemisphere images section -->
-    <div class="row">
-        <div class='col-md-12'>
-            <h2 class="text-center"> Mars Hemispheres </h2> <!-- .text-center is from bootstrap 4.0.0 -->
+    {% if hemis_1_title %} <!-- sample this var to check to see if there's anything in the hemisphere section -->
+        <div class="row">
+            <div class='col-md-12'>
+                <h2 class="text-center"> Mars Hemispheres </h2> <!-- .text-center is from bootstrap 4.0.0 -->
+            </div>
         </div>
-    </div>
+    {% else %}
+    </br>
+    {% endif %}
 
-    <div class="row">
-        <div class='col-md-6'>
-            <figure>
-                <figcaption class="hemis_caption"> {{hemis_1_title}} </figcaption>
-                <img src={{hemis_1_img}} alt="Mars hemisphere 1">
-            </figure>
+    <hr>
+
+    {% if (hemis_1_img) and (hemis_2_title) and (hemis_2_img) %}
+        <div class="row">
+            <div class='col-md-6'>
+                <figure class="hemis_left">
+                    <figcaption class="hemis_caption"> {{hemis_1_title}} </figcaption>
+                    <a target="_blank" href={{hemis_1_img}}>
+                        <img class="hemis_img" src={{hemis_1_img}} alt="Mars hemisphere 1">
+                    </a>
+                </figure>
+            </div>
+            <div class='col-md-6'>
+                <figure class="hemis_right">
+                    <figcaption class="hemis_caption"> {{hemis_2_title}} </figcaption>
+                    <a target="_blank" href={{hemis_2_img}}>
+                        <img class="hemis_img" src={{hemis_2_img}} alt="Mars hemisphere 2">
+                    </a>
+                </figure>
+            </div>
         </div>
-        <div class='col-md-6'>
-            <figure>
-                <figcaption class="hemis_caption"> {{hemis_2_title}} </figcaption>
-                <img src={{hemis_2_img}} alt="Mars hemisphere 2">
-            </figure>
+    {% else %}
+        </br>
+    {% endif %}
+
+    {% if (hemis_3_title) and (hemis_3_img) and (hemis_4_title) and (hemis_4_img) %}
+        <div class="row">
+            <div class='col-md-6'>
+                <figure class="hemis_left">
+                    <figcaption class="hemis_caption"> {{hemis_3_title}} </figcaption>
+                    <a target="_blank" href={{hemis_3_img}}>
+                        <img class="hemis_img" src={{hemis_3_img}} alt="Mars hemisphere 3">
+                    </a>
+                </figure>
+            </div>
+            <div class='col-md-6'>
+                <figure class="hemis_right">
+                    <figcaption class="hemis_caption"> {{hemis_4_title}} </figcaption>
+                    <a target="_blank" href={{hemis_4_img}}>
+                        <img class="hemis_img" src={{hemis_4_img}} alt="Mars hemisphere 4">
+                    </a>
+                </figure>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class='col-md-6'>
-            <figure>
-                <figcaption class="hemis_caption"> {{hemis_3_title}} </figcaption>
-                <img src={{hemis_3_img}} alt="Mars hemisphere 3">
-            </figure>
-        </div>
-        <div class='col-md-6'>
-            <figure>
-                <figcaption class="hemis_caption"> {{hemis_4_title}} </figcaption>
-                <img src={{hemis_4_img}} alt="Mars hemisphere 4">
-            </figure>
-        </div>
-    </div>
+    {% else %}
+        </br>
+    {% endif %}
+
   </div> <!-- ends container -->
+  <hr>
+  </br>
 </body>
 </html>
